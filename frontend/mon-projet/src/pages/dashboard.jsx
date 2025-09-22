@@ -22,6 +22,7 @@ export default function Dashboard() {
     await logoutUser();
     navigate("/login");
   };
+  
 
   if (loading) return <p>Chargement...</p>;
   if (!user) return null;
