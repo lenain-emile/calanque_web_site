@@ -1,0 +1,14 @@
+#profil{
+    color: brown;
+}
+header {
+    background-color: #046381;
+    margin-top: -1%;
+    margin-left: -1%;
+    margin-right: -8px;
+    padding: 5px;
+    color:white;
+    display: flex;
+    gap : 20px;
+    
+}

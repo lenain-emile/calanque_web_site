@@ -1,0 +1,23 @@
+
+header {
+    background-color: #046381;
+    margin-top: -1%;
+    margin-left: -1%;
+    margin-right: -8px;
+    padding: 5px;
+    color:white;
+    display: flex;
+    gap : 20px;
+    
+}
+
+Link{
+    list-style: none;
+    text-decoration: none;
+    color:white;
+}
+#fond {
+    margin-left: -9px;
+    width: 844px;
+    
+}
