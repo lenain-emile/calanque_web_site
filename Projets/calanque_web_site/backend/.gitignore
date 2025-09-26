@@ -1,0 +1,30 @@
+# Dépendances Composer
+vendor/
+composer.lock
+
+# Fichiers d'environnement
+.env
+.env.local
+.env.production
+
+# Logs
+*.log
+logs/
+
+# Cache
+cache/
+tmp/
+
+# Fichiers de configuration sensibles
+config/secrets.php
+config/keys.php
+
+# Fichiers de l'IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Fichiers système
+.DS_Store
+Thumbs.db

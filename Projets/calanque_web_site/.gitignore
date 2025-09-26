@@ -1,0 +1,35 @@
+# Fichiers d'environnement
+.env
+.env.local
+.env.production
+.env.staging
+
+# Fichiers de configuration sensibles
+config/secrets.php
+config/keys.php
+
+# Logs
+*.log
+logs/
+
+# Cache
+cache/
+tmp/
+
+# Dépendances
+node_modules/
+vendor/
+
+# Fichiers de l'IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Fichiers de build
+dist/
+build/
