@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Carte avec Leaflet</title>
+  <!-- CSS de Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map { height: 500px; } /* la carte doit avoir une taille définie */
+  </style>
+</head>
+<body>
+
+  <h1>Ma première carte Leaflet</h1>
+  <div id="map"></div>
+
+  
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // pour carte marseille w.e (coordonnées = Marseille, zoom = 12)
+  var map = L.map('map').setView([43.2235, 5.4460], 14);
+
+    // Ajouter les tuiles (OpenStreetMap ici)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Marqueur Sugiton et Morgiou pour  montrer depart arrivée thingy
+    var marker = L.marker([43.2235, 5.4460]).addTo(map);
+    marker.bindPopup("<b>Calanque de Sugiton</b>");
+    var marker = L.marker([43.2090, 5.4440]).addTo(map);
+    marker.bindPopup("<b>Calanque de Morgiou</b>");
+ var trail = [
+      [43.2235, 5.4460], // Sugiton
+      [43.2210, 5.4455],
+      [43.2180, 5.4450],
+      [43.2150, 5.4445],
+      [43.2120, 5.4442],
+      [43.2090, 5.4440]  // Morgiou
+    ];
+
+    L.polyline(trail, {color: 'blue', weight: 4, opacity: 0.7}).addTo(map); //trace la ligne gg ez
+  </script>
+</body>
+</html>
