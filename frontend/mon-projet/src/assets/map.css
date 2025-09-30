@@ -1,0 +1,583 @@
+/* Import des styles Leaflet */
+@import url('https://unpkg.com/leaflet/dist/leaflet.css');
+
+/* Styles pour la carte des calanques */
+#map {
+  height: 400px;
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid #e0e0e0;
+}
+
+/* Container pour la carte */
+.map-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+/* Titre de la carte */
+.map-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Styles pour les popups personnalisés */
+.leaflet-popup-content {
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.leaflet-popup-content b {
+  color: #2c5aa0;
+  font-size: 16px;
+}
+
+/* Styles pour les marqueurs personnalisés */
+.calanque-marker {
+  background-color: #2c5aa0;
+  border: 2px solid white;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Styles pour les sentiers */
+.trail-line {
+  stroke-dasharray: 5, 5;
+  animation: dash 20s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -10;
+  }
+}
+
+/* Styles pour la page de carte */
+.map-page {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.map-description {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+/* Styles pour les contrôles */
+.map-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.trail-controls {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+/* Styles des boutons */
+.btn-base {
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-base:hover {
+  opacity: 0.8;
+  transform: translateY(-1px);
+}
+
+.btn-reset {
+  padding: 8px 16px;
+  background-color: #dc3545;
+  color: white;
+  font-size: 12px;
+}
+
+.btn-fit-view {
+  padding: 8px 16px;
+  background-color: #28a745;
+  color: white;
+  font-size: 12px;
+}
+
+.btn-trail {
+  padding: 6px 12px;
+  color: white;
+  font-size: 11px;
+}
+
+.btn-trail-blue {
+  background-color: blue;
+}
+
+.btn-trail-green {
+  background-color: green;
+}
+
+.btn-trail-red {
+  background-color: red;
+}
+
+.btn-trail-purple {
+  background-color: #6f42c1;
+}
+
+.btn-trail-gray {
+  background-color: #6c757d;
+}
+
+/* Styles pour les informations */
+.calanque-info {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.info-title {
+  color: #2c5aa0;
+  margin-bottom: 15px;
+}
+
+.calanques-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.calanque-item {
+  padding: 10px;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.calanque-item h4 {
+  color: #333;
+  margin-bottom: 5px;
+  margin-top: 0;
+}
+
+.calanque-item p {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+}
+
+.trails-section {
+  border-top: 1px solid #dee2e6;
+  padding-top: 15px;
+}
+
+.trails-title {
+  color: #2c5aa0;
+  margin-bottom: 10px;
+}
+
+.trails-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 10px;
+}
+
+.trail-info {
+  padding: 8px;
+  border-radius: 4px;
+  border: 2px solid;
+}
+
+.trail-info-blue {
+  background-color: rgba(0,0,255,0.1);
+  border-color: blue;
+}
+
+.trail-info-green {
+  background-color: rgba(0,128,0,0.1);
+  border-color: green;
+}
+
+.trail-info-red {
+  background-color: rgba(255,0,0,0.1);
+  border-color: red;
+}
+
+.trail-info strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.trail-info-blue strong {
+  color: blue;
+}
+
+.trail-info-green strong {
+  color: green;
+}
+
+.trail-info-red strong {
+  color: red;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  #map {
+    height: 300px;
+    border-radius: 4px;
+  }
+  
+  .map-container {
+    padding: 15px;
+    margin: 10px 0;
+  }
+  
+  .map-title {
+    font-size: 1.3rem;
+  }
+  
+  .map-controls,
+  .trail-controls {
+    gap: 5px;
+  }
+  
+  .calanques-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  
+  .trails-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  #map {
+    height: 250px;
+  }
+  
+  .map-container {
+    padding: 10px;
+  }
+  
+  .map-title {
+    font-size: 1.1rem;
+  }
+  
+  .btn-base {
+    font-size: 10px;
+    padding: 6px 10px;
+  }
+  
+  .btn-trail {
+    padding: 5px 8px;
+    font-size: 10px;
+  }
+}
+
+/* === STYLES POUR LES INFORMATIONS NATURALISTES === */
+
+/* Container principal des informations nature */
+.nature-info {
+  margin-top: 25px;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8fffe 0%, #f0f9f0 100%);
+  border-radius: 12px;
+  border: 2px solid #4caf50;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.1);
+}
+
+/* Header avec titre et bouton fermer */
+.nature-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e8f5e8;
+}
+
+.nature-title {
+  color: #2e7d32;
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.btn-close-nature {
+  padding: 8px 12px;
+  background-color: #757575;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  min-width: auto;
+}
+
+.btn-close-nature:hover {
+  background-color: #616161;
+}
+
+/* Détails d'un sentier */
+.trail-nature-details {
+  width: 100%;
+}
+
+/* Aperçu du sentier */
+.trail-overview {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #4caf50;
+}
+
+.trail-stats {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.stat-badge {
+  background: #e8f5e8;
+  color: #2e7d32;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.ecosystems {
+  margin: 0;
+  color: #555;
+  font-style: italic;
+}
+
+/* Sections nature (faune/flore) */
+.nature-section {
+  margin-bottom: 25px;
+}
+
+.section-title {
+  color: #2e7d32;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  border-bottom: 2px solid #4caf50;
+  padding-bottom: 5px;
+}
+
+/* Grille des catégories */
+.nature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Catégories (oiseaux, plantes, etc.) */
+.nature-category {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.category-title {
+  color: #388e3c;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #c8e6c9;
+  padding-bottom: 5px;
+}
+
+/* Liste des espèces */
+.species-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Cartes d'espèces */
+.species-card {
+  background: #f9fff9;
+  padding: 12px;
+  border-radius: 6px;
+  border-left: 3px solid #66bb6a;
+  transition: all 0.2s ease;
+}
+
+.species-card:hover {
+  background: #f1f8f1;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(102, 187, 106, 0.15);
+}
+
+.species-name {
+  font-weight: bold;
+  color: #2e7d32;
+  margin-bottom: 4px;
+}
+
+.species-scientific {
+  font-style: italic;
+  color: #757575;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.species-description {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.species-observation {
+  color: #6a4c93;
+  font-size: 13px;
+  background: #f3e5f5;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-top: 6px;
+}
+
+.species-feature {
+  color: #ff8f00;
+  font-size: 13px;
+  background: #fff8e1;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-top: 6px;
+}
+
+/* Points d'intérêt */
+.points-interest {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 15px;
+}
+
+.interest-point {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  border: 2px solid #a5d6a7;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.point-name {
+  color: #2e7d32;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.point-description {
+  color: #555;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.point-species {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.point-fauna,
+.point-flora {
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+.point-fauna {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.point-flora {
+  background: #e8f5e8;
+  color: #388e3c;
+}
+
+/* Vue d'ensemble tous sentiers */
+.all-trails-overview .overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 25px;
+}
+
+.all-trails-overview .trail-nature-details {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #c8e6c9;
+}
+
+/* Responsive pour les informations naturalistes */
+@media (max-width: 768px) {
+  .nature-info {
+    padding: 15px;
+    margin-top: 15px;
+  }
+  
+  .nature-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  
+  .nature-title {
+    font-size: 1.2rem;
+  }
+  
+  .nature-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .points-interest {
+    grid-template-columns: 1fr;
+  }
+  
+  .all-trails-overview .overview-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .trail-stats {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .species-card {
+    padding: 8px;
+  }
+  
+  .interest-point {
+    padding: 12px;
+  }
+  
+  .point-species {
+    gap: 4px;
+  }
+  
+  .point-fauna,
+  .point-flora {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+}

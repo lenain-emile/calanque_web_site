@@ -1,11 +1,8 @@
-// components/Home.jsx
 import { Link } from "react-router-dom";
 
-
-
-export default function Home() {
+export default function Profil() {
   return (
-    <div>
+    <div className="Profil">
       <header>
         <Link to="/">
         <img 
@@ -13,9 +10,12 @@ export default function Home() {
           alt="Aller vers le profil"
         />
       </Link>
-        <h1>Au coeur des calanques</h1>
+        <h1>Au coeur des calanques</h1>  
       </header>
-      <img id="fond" src ="src/assets/fond.png"></img>
+      
+
+
+      
     </div>
   );
 }
