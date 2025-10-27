@@ -24,6 +24,11 @@ class Reservation {
         return $stm->execute($params);
     }
 
+    // Expose l'ID de la dernière insertion (utile aux contrôleurs)
+    public function getLastInsertId() {
+        return $this->connect->lastInsertId();
+    }
+
     // --- Méthodes de gestion des capacités ---
     
     /**
@@ -189,11 +194,23 @@ class Reservation {
     // --- MÉTHODES DE PAIEMENT ---
 
     public function updatePaymentStatus($id, $paymentStatus) {
-        $sql = "UPDATE reservations SET payment_status = :payment_status WHERE id = :id";
-        return $this->execute($sql, [
-            ':id' => $id,
-            ':payment_status' => $paymentStatus
-        ]);
+        try {
+            $sql = "UPDATE reservations 
+                    SET payment_status = :payment_status,
+                        status = CASE 
+                            WHEN :payment_status = 'paid' THEN 'CONFIRMED'
+                            ELSE status
+                        END
+                    WHERE id = :id";
+            
+            return $this->execute($sql, [
+                ':id' => $id,
+                ':payment_status' => $paymentStatus
+            ]);
+        } catch (\PDOException $e) {
+            error_log("Erreur lors de la mise à jour du statut de paiement : " . $e->getMessage());
+            return false;
+        }
     }
 
     public function updateAmount($id, $amount) {

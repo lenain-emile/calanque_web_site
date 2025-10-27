@@ -17,6 +17,12 @@ class StripeConfig {
     
     public static function getStripeClient() {
         $secretKey = getenv('STRIPE_SECRET') ?: self::STRIPE_SECRET_KEY;
+        if (!$secretKey) {
+            throw new \Exception('Clé Stripe manquante. Configurez STRIPE_SECRET ou STRIPE_SECRET_KEY.');
+        }
+        if (!class_exists('Stripe\\Stripe') || !class_exists('Stripe\\StripeClient')) {
+            throw new \Exception('Librairie Stripe non trouvée. Exécutez "composer install" dans backend/.');
+        }
         \Stripe\Stripe::setApiKey($secretKey);
         return new \Stripe\StripeClient($secretKey);
     }

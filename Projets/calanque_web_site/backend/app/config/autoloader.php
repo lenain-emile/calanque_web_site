@@ -6,6 +6,12 @@ if (!defined('ROOT_PATH')) {
     define('ROOT_PATH', dirname(__DIR__, 2));
 }
 
+// Charger l'autoloader de Composer (lib Stripe) s'il existe
+$composerAutoload = ROOT_PATH . '/vendor/autoload.php';
+if (file_exists($composerAutoload)) {
+    require_once $composerAutoload;
+}
+
 // Enregistre l'autoloader
 spl_autoload_register(function ($class) {
     // Convertit le namespace en chemin de fichier

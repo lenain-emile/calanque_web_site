@@ -4,33 +4,11 @@ namespace App\Controllers;
 use App\Models\User;
 use Exception;
 
-class UserController {
+class UserController extends BaseController {
     private $user;
 
     public function __construct() {
         $this->user = new User();
-    }
-
-    private function response($success, $message, $data = null) {
-        return compact('success', 'message', 'data');
-    }
-
-    private function requireMethod($method) {
-        if ($_SERVER['REQUEST_METHOD'] !== $method) {
-            return $this->response(false, "Méthode $method requise.");
-        }
-        return true;
-    }
-
-    private function requireSession() {
-        if (session_status() !== PHP_SESSION_ACTIVE) {
-            return $this->response(false, 'Session non initialisée.');
-        }
-        return true;
-    }
-
-    private function input() {
-        return json_decode(file_get_contents('php://input'), true) ?? [];
     }
 
     // --- CRUD ---

@@ -4,33 +4,11 @@ namespace App\Controllers;
 use App\Models\Reservation;
 use Exception;
 
-class ReservationController {
+class ReservationController extends BaseController {
     private $reservation;
 
     public function __construct() {
         $this->reservation = new Reservation();
-    }
-
-    private function response($success, $message, $data = null) {
-        return compact('success', 'message', 'data');
-    }
-
-    private function requireMethod($method) {
-        if ($_SERVER['REQUEST_METHOD'] !== $method) {
-            return $this->response(false, "Méthode $method requise.");
-        }
-        return true;
-    }
-
-    private function requireSession() {
-        if (session_status() !== PHP_SESSION_ACTIVE) {
-            return $this->response(false, 'Session non initialisée.');
-        }
-        return true;
-    }
-
-    private function input() {
-        return json_decode(file_get_contents('php://input'), true) ?? [];
     }
 
     // --- CRUD ---
@@ -193,7 +171,7 @@ class ReservationController {
                 return $this->response(false, 'Erreur lors de la création de la réservation.');
             }
 
-            $reservationId = $this->reservation->connect->lastInsertId();
+            $reservationId = $this->reservation->getLastInsertId();
 
             // Mettre à jour le montant de la réservation
             $this->reservation->updateAmount($reservationId, $amount);
@@ -220,6 +198,45 @@ class ReservationController {
                 $this->reservation->delete($reservationId);
                 return $this->response(false, 'Erreur lors de la création du paiement: ' . $paymentResult['message']);
             }
+
+        } catch (Exception $e) {
+            return $this->response(false, $e->getMessage());
+        }
+    }
+
+    /**
+     * Crée une réservation et enregistre le montant (flux Stripe Checkout)
+     */
+    public function createReservationForCheckout() {
+        if (($check = $this->requireMethod('POST')) !== true) return $check;
+
+        $data = $this->input();
+        $userId = $data['user_id'] ?? null;
+        $campingId = $data['camping_id'] ?? null;
+        $start = $data['start_date'] ?? null;
+        $end = $data['end_date'] ?? null;
+        $people = $data['num_people'] ?? null;
+        $name = $data['reservation_name'] ?? null;
+        $amount = $data['amount'] ?? null;
+
+        if (!$userId || !$campingId || !$start || !$end || !$people || !$amount) {
+            return $this->response(false, 'Tous les champs sont obligatoires.');
+        }
+
+        try {
+            $ok = $this->reservation->create($userId, $campingId, $start, $end, $people, $name);
+            if (!$ok) {
+                return $this->response(false, 'Erreur lors de la création de la réservation.');
+            }
+
+            $reservationId = $this->reservation->getLastInsertId();
+
+            // Mettre à jour le montant de la réservation
+            $this->reservation->updateAmount($reservationId, $amount);
+
+            return $this->response(true, 'Réservation créée pour Checkout.', [
+                'reservation_id' => $reservationId
+            ]);
 
         } catch (Exception $e) {
             return $this->response(false, $e->getMessage());

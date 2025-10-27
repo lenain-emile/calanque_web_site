@@ -1,0 +1,274 @@
+/* Page Sentiers - Calanques */
+/* ✅ Utilisation de Bootstrap pour la mise en page (row, col-*, gap-*, text-center, d-flex, mb-*, etc.) */
+/* CSS custom uniquement pour les effets visuels spécifiques */
+
+.sentiers-container {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  padding-top: 180px;
+  padding-bottom: 50px;
+}
+
+.sentiers-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}
+
+.sentiers-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.sentiers-header {
+  margin-bottom: 50px;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.sentiers-title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #00AEEF;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.sentiers-subtitle {
+  font-size: 1.5rem;
+  color: white;
+  font-style: italic;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  margin: 0;
+}
+
+.section-title {
+  color: #00AEEF;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  margin-bottom: 30px;
+}
+
+/* Cartes Sentiers */
+.trail-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.trail-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+  background: rgba(255, 255, 255, 1);
+}
+
+.trail-card-selected {
+  border: 3px solid #00AEEF;
+  background: rgba(0, 174, 239, 0.1);
+}
+
+.trail-name {
+  color: #005BAC;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.trail-description {
+  color: #2c3e50;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.trail-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.detail-item {
+  color: #2c3e50;
+  font-size: 0.95rem;
+}
+
+.detail-item strong {
+  color: #005BAC;
+}
+
+/* Carte Leaflet */
+.map-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.map-container {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.sentiers-map {
+  z-index: 1;
+}
+
+/* Cartes Ressources Naturelles */
+.resource-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.resource-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+  background: rgba(255, 255, 255, 1);
+}
+
+.resource-name {
+  color: #005BAC;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.resource-description {
+  color: #2c3e50;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Boutons de filtres */
+.btn-group .btn {
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn-group .btn-outline-primary {
+  border-color: #00AEEF;
+  color: #00AEEF;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.btn-group .btn-outline-primary:hover {
+  background: #00AEEF;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.btn-group .btn-primary {
+  background: linear-gradient(45deg, #00AEEF, #005BAC);
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 174, 239, 0.4);
+}
+
+/* Actions */
+.sentiers-actions {
+  margin: 40px 0;
+}
+
+/* Loading */
+.sentiers-loading {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  color: white;
+}
+
+.sentiers-loading p {
+  color: white;
+  font-size: 1.2rem;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sentiers-container {
+    padding-top: 160px;
+  }
+
+  .sentiers-title {
+    font-size: 2.2rem;
+  }
+
+  .sentiers-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .map-container {
+    height: 400px !important;
+  }
+
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-group .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .sentiers-container {
+    padding-top: 140px;
+  }
+
+  .sentiers-header {
+    padding: 25px;
+  }
+
+  .sentiers-title {
+    font-size: 1.8rem;
+  }
+
+  .sentiers-subtitle {
+    font-size: 1rem;
+  }
+
+  .trail-card,
+  .resource-card {
+    padding: 20px;
+  }
+
+  .map-container {
+    height: 300px !important;
+  }
+}

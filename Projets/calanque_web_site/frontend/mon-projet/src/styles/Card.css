@@ -1,0 +1,103 @@
+/* Styles pour le composant Card réutilisable */
+
+.card {
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Variantes */
+.card-default {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+.card-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.card-solid {
+  background: white;
+  border: 1px solid #e1e8ed;
+}
+
+.card-dark {
+  background: rgba(44, 62, 80, 0.95);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Tailles de padding */
+.card-padding-small {
+  padding: 20px;
+}
+
+.card-padding-medium {
+  padding: 30px;
+}
+
+.card-padding-large {
+  padding: 40px;
+}
+
+.card-padding-none {
+  padding: 0;
+}
+
+/* Effets spéciaux */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+}
+
+.card-flat {
+  box-shadow: none;
+  border: 1px solid #e1e8ed;
+}
+
+.card-elevated {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card {
+    border-radius: 16px;
+    margin: 10px;
+  }
+  
+  .card-padding-large {
+    padding: 30px 20px;
+  }
+  
+  .card-padding-medium {
+    padding: 25px 15px;
+  }
+  
+  .card-padding-small {
+    padding: 15px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    border-radius: 12px;
+    margin: 5px;
+  }
+  
+  .card-padding-large {
+    padding: 20px 15px;
+  }
+  
+  .card-padding-medium {
+    padding: 20px 10px;
+  }
+}

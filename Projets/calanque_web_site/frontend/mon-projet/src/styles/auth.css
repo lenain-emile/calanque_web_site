@@ -1,0 +1,228 @@
+/* Auth pages: Login & Register */
+
+.login-container,
+.register-container {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 20px 20px 20px;
+  padding-top: 180px;
+  position: relative;
+}
+
+.login-overlay,
+.register-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+
+.login-card,
+.register-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  max-width: 450px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.login-header,
+.register-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-logo,
+.register-logo {
+  margin-bottom: 15px;
+}
+
+.login-logo img,
+.register-logo img {
+  height: 80px;
+  width: auto;
+  border-radius: 50%;
+  border: 3px solid rgba(0, 91, 172, 0.3);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.login-title,
+.register-title {
+  color: #2c3e50;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(45deg, #00AEEF, #005BAC);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.register-title {
+  background: linear-gradient(45deg, #667eea, #005BAC);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.login-subtitle,
+.register-subtitle {
+  color: #7f8c8d;
+  margin: 10px 0 0;
+  font-size: 1rem;
+}
+
+.login-message,
+.register-message {
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.login-message.error,
+.register-message.error {
+  background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+  color: white;
+}
+
+.login-message.success,
+.register-message.success {
+  background: linear-gradient(45deg, #51cf66, #40c057);
+  color: white;
+}
+
+.login-footer,
+.register-footer {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.login-footer p,
+.register-footer p {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.login-link,
+.register-link {
+  background: none;
+  border: none;
+  color: #005BAC;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.login-link:hover,
+.register-link:hover {
+  color: #00AEEF;
+}
+
+/* Register specific */
+.register-field {
+  margin-bottom: 20px;
+}
+
+.register-field.password {
+  margin-bottom: 25px;
+}
+
+.register-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.register-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e1e8ed;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.register-input:focus {
+  border-color: #667eea;
+}
+
+.register-button {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.register-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .login-container,
+  .register-container {
+    padding-top: 160px;
+  }
+  
+  .login-card,
+  .register-card {
+    padding: 30px 25px;
+  }
+  
+  .login-logo img,
+  .register-logo img {
+    height: 70px;
+  }
+  
+  .login-title,
+  .register-title {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .login-container,
+  .register-container {
+    padding: 15px 15px 15px 15px;
+    padding-top: 140px;
+  }
+  
+  .login-card,
+  .register-card {
+    padding: 25px 20px;
+  }
+  
+  .login-logo img,
+  .register-logo img {
+    height: 60px;
+  }
+  
+  .login-title,
+  .register-title {
+    font-size: 1.6rem;
+  }
+}

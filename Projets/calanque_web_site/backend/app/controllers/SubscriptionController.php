@@ -4,26 +4,11 @@ namespace App\Controllers;
 use App\Models\Subscription;
 use Exception;
 
-class SubscriptionController {
+class SubscriptionController extends BaseController {
     private $subscription;
 
     public function __construct() {
         $this->subscription = new Subscription();
-    }
-
-    private function response($success, $message, $data = null) {
-        return compact('success', 'message', 'data');
-    }
-
-    private function requireMethod($method) {
-        if ($_SERVER['REQUEST_METHOD'] !== $method) {
-            return $this->response(false, "Méthode $method requise.");
-        }
-        return true;
-    }
-
-    private function input() {
-        return json_decode(file_get_contents('php://input'), true) ?? [];
     }
 
     // --- CRUD DE BASE ---

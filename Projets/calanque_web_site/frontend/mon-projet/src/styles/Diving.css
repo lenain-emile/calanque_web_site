@@ -1,0 +1,300 @@
+/* Page Plongée - L'Atelier de la Mer */
+
+.diving-container {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  padding-top: 180px;
+  padding-bottom: 50px;
+}
+
+.diving-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}
+
+.diving-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.diving-header {
+  text-align: center;
+  margin-bottom: 50px;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.diving-title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #00AEEF;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.diving-subtitle {
+  font-size: 1.5rem;
+  color: white;
+  font-style: italic;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.diving-info-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.diving-card {
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.diving-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+}
+
+.diving-card-full {
+  grid-column: 1 / -1;
+}
+
+.diving-card h2 {
+  color: #00AEEF;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #00AEEF;
+  padding-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.diving-info p {
+  margin-bottom: 15px;
+  color: white;
+  line-height: 1.6;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.diving-info strong {
+  color: #00AEEF;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.diving-info a {
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.diving-info a:hover {
+  color: #00AEEF;
+  text-decoration: underline;
+}
+
+.diving-certifications {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.certification-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: rgba(0, 174, 239, 0.1);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.certification-item:hover {
+  background: rgba(0, 174, 239, 0.2);
+  transform: translateX(5px);
+}
+
+.certification-icon {
+  font-size: 2rem;
+}
+
+.certification-item p {
+  margin: 0;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.diving-description {
+  color: white;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.diving-services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.service-item {
+  text-align: center;
+  padding: 20px;
+  background: rgba(0, 91, 172, 0.05);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.service-item:hover {
+  background: rgba(0, 174, 239, 0.15);
+  transform: translateY(-5px);
+}
+
+.service-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.service-item h3 {
+  color: #00AEEF;
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.service-item p {
+  color: white;
+  font-size: 0.95rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.diving-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 40px 0;
+}
+
+.diving-social {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.diving-social h3 {
+  color: #00AEEF;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  padding: 12px 30px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.social-link.facebook {
+  background: linear-gradient(45deg, #3b5998, #4c70ba);
+}
+
+.social-link.instagram {
+  background: linear-gradient(45deg, #e1306c, #fd1d1d, #f77737);
+}
+
+.social-link.google {
+  background: linear-gradient(45deg, #4285f4, #34a853);
+}
+
+.social-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .diving-container {
+    padding-top: 160px;
+  }
+
+  .diving-title {
+    font-size: 2.2rem;
+  }
+
+  .diving-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .diving-info-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .diving-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .diving-services {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .diving-container {
+    padding-top: 140px;
+  }
+
+  .diving-header {
+    padding: 25px;
+  }
+
+  .diving-title {
+    font-size: 1.8rem;
+  }
+
+  .diving-subtitle {
+    font-size: 1rem;
+  }
+
+  .diving-card {
+    padding: 20px;
+  }
+
+  .social-links {
+    flex-direction: column;
+  }
+}

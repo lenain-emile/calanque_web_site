@@ -23,6 +23,9 @@ use App\Controllers\SubscriptionController;
 use App\Controllers\ReservationController;
 use App\Controllers\PaymentController;
 use App\Controllers\WebhookController;
+use App\Controllers\CampingController;
+use App\Controllers\TrailController;
+use App\Controllers\NaturalResourceController;
 
 // Routage simple basé sur l'URL
 $request = $_SERVER['REQUEST_URI'];
@@ -264,6 +267,205 @@ switch ($path) {
                 echo json_encode(['error' => 'Méthode non autorisée']);
             }
         }
+
+        // Route pour récupérer les réservations d'un utilisateur
+        elseif (preg_match('/^\/api\/reservations\/user\/(\d+)$/', $path, $matches)) {
+            $userId = $matches[1];
+            $reservationController = new ReservationController();
+            
+            if ($method === 'GET') {
+                echo json_encode($reservationController->getReservationsByUser($userId));
+            } else {
+                http_response_code(405);
+                echo json_encode(['error' => 'Méthode non autorisée']);
+            }
+        }
+        
+        // === ROUTES CAMPINGS ===
+        
+        // Routes pour les campings généraux
+        elseif (preg_match('/^\/api\/campings$/', $path)) {
+            $campingController = new CampingController();
+            switch ($method) {
+                case 'GET':
+                    echo json_encode($campingController->getAllCampings());
+                    break;
+                case 'POST':
+                    echo json_encode($campingController->createCamping());
+                    break;
+                default:
+                    http_response_code(405);
+                    echo json_encode(['error' => 'Méthode non autorisée']);
+            }
+        }
+        
+        // Routes pour un camping spécifique
+        elseif (preg_match('/^\/api\/campings\/(\d+)$/', $path, $matches)) {
+            $campingId = $matches[1];
+            $campingController = new CampingController();
+            
+            switch ($method) {
+                case 'GET':
+                    echo json_encode($campingController->getCampingById($campingId));
+                    break;
+                case 'PUT':
+                    echo json_encode($campingController->updateCamping($campingId));
+                    break;
+                case 'DELETE':
+                    echo json_encode($campingController->deleteCamping($campingId));
+                    break;
+                default:
+                    http_response_code(405);
+                    echo json_encode(['error' => 'Méthode non autorisée']);
+            }
+        }
+        
+        // Route pour récupérer les campings avec disponibilité
+        elseif (preg_match('/^\/api\/campings\/availability$/', $path)) {
+            $campingController = new CampingController();
+            
+            if ($method === 'GET') {
+                echo json_encode($campingController->getCampingsWithAvailability());
+            } else {
+                http_response_code(405);
+                echo json_encode(['error' => 'Méthode non autorisée']);
+            }
+        }
+        
+        // Route pour vérifier la disponibilité d'un camping (utilise ReservationController)
+        elseif (preg_match('/^\/api\/campings\/check-availability$/', $path)) {
+            $reservationController = new ReservationController();
+            
+            if ($method === 'GET') {
+                echo json_encode($reservationController->checkCapacity());
+            } else {
+                http_response_code(405);
+                echo json_encode(['error' => 'Méthode non autorisée']);
+            }
+        }
+        
+        // === ROUTES TRAILS (SENTIERS) ===
+        
+        // Routes pour les sentiers généraux
+        elseif (preg_match('/^\/api\/trails$/', $path)) {
+            $trailController = new TrailController();
+            switch ($method) {
+                case 'GET':
+                    echo json_encode($trailController->getAllTrails());
+                    break;
+                case 'POST':
+                    echo json_encode($trailController->createTrail());
+                    break;
+                default:
+                    http_response_code(405);
+                    echo json_encode(['error' => 'Méthode non autorisée']);
+            }
+        }
+        
+        // Routes pour un sentier spécifique
+        elseif (preg_match('/^\/api\/trails\/(\d+)$/', $path, $matches)) {
+            $trailId = $matches[1];
+            $trailController = new TrailController();
+            
+            switch ($method) {
+                case 'GET':
+                    echo json_encode($trailController->getTrailById($trailId));
+                    break;
+                case 'PUT':
+                    echo json_encode($trailController->updateTrail($trailId));
+                    break;
+                case 'DELETE':
+                    echo json_encode($trailController->deleteTrail($trailId));
+                    break;
+                default:
+                    http_response_code(405);
+                    echo json_encode(['error' => 'Méthode non autorisée']);
+            }
+        }
+        
+        // Route pour récupérer les ressources d'un sentier
+        elseif (preg_match('/^\/api\/trails\/(\d+)\/resources$/', $path, $matches)) {
+            $trailId = $matches[1];
+            $trailController = new TrailController();
+            
+            if ($method === 'GET') {
+                echo json_encode($trailController->getTrailResources($trailId));
+            } else {
+                http_response_code(405);
+                echo json_encode(['error' => 'Méthode non autorisée']);
+            }
+        }
+        
+        // Route pour ajouter une ressource à un sentier
+        elseif (preg_match('/^\/api\/trails\/(\d+)\/resources\/(\d+)$/', $path, $matches)) {
+            $trailId = $matches[1];
+            $resourceId = $matches[2];
+            $trailController = new TrailController();
+            
+            switch ($method) {
+                case 'POST':
+                    echo json_encode($trailController->addResourceToTrail($trailId, $resourceId));
+                    break;
+                case 'DELETE':
+                    echo json_encode($trailController->removeResourceFromTrail($trailId, $resourceId));
+                    break;
+                default:
+                    http_response_code(405);
+                    echo json_encode(['error' => 'Méthode non autorisée']);
+            }
+        }
+        
+        // === ROUTES NATURAL RESOURCES (RESSOURCES NATURELLES) ===
+        
+        // Routes pour les ressources naturelles générales
+        elseif (preg_match('/^\/api\/natural-resources$/', $path)) {
+            $resourceController = new NaturalResourceController();
+            switch ($method) {
+                case 'GET':
+                    echo json_encode($resourceController->getAllResources());
+                    break;
+                case 'POST':
+                    echo json_encode($resourceController->createResource());
+                    break;
+                default:
+                    http_response_code(405);
+                    echo json_encode(['error' => 'Méthode non autorisée']);
+            }
+        }
+        
+        // Route pour récupérer les ressources par type
+        elseif (preg_match('/^\/api\/natural-resources\/type\/(\w+)$/', $path, $matches)) {
+            $type = $matches[1];
+            $resourceController = new NaturalResourceController();
+            
+            if ($method === 'GET') {
+                echo json_encode($resourceController->getResourcesByType($type));
+            } else {
+                http_response_code(405);
+                echo json_encode(['error' => 'Méthode non autorisée']);
+            }
+        }
+        
+        // Routes pour une ressource naturelle spécifique
+        elseif (preg_match('/^\/api\/natural-resources\/(\d+)$/', $path, $matches)) {
+            $resourceId = $matches[1];
+            $resourceController = new NaturalResourceController();
+            
+            switch ($method) {
+                case 'GET':
+                    echo json_encode($resourceController->getResourceById($resourceId));
+                    break;
+                case 'PUT':
+                    echo json_encode($resourceController->updateResource($resourceId));
+                    break;
+                case 'DELETE':
+                    echo json_encode($resourceController->deleteResource($resourceId));
+                    break;
+                default:
+                    http_response_code(405);
+                    echo json_encode(['error' => 'Méthode non autorisée']);
+            }
+        }
         
         // === ROUTES STRIPE - PAIEMENTS D'ABONNEMENT ===
         
@@ -329,6 +531,17 @@ switch ($path) {
                 echo json_encode(['error' => 'Méthode non autorisée']);
             }
         }
+        // Créer une réservation pour Stripe Checkout (retourne reservation_id)
+        elseif (preg_match('/^\/api\/reservation\/checkout\/create$/', $path)) {
+            $reservationController = new ReservationController();
+            
+            if ($method === 'POST') {
+                echo json_encode($reservationController->createReservationForCheckout());
+            } else {
+                http_response_code(405);
+                echo json_encode(['error' => 'Méthode non autorisée']);
+            }
+        }
         
         // Créer un PaymentIntent pour réservation
         elseif (preg_match('/^\/api\/reservation\/payment\/stripe$/', $path)) {
@@ -336,6 +549,28 @@ switch ($path) {
             
             if ($method === 'POST') {
                 echo json_encode($paymentController->createReservationPayment());
+            } else {
+                http_response_code(405);
+                echo json_encode(['error' => 'Méthode non autorisée']);
+            }
+        }
+        // Créer une session Stripe Checkout pour réservation
+        elseif (preg_match('/^\/api\/reservation\/checkout\/session$/', $path)) {
+            $paymentController = new PaymentController();
+            
+            if ($method === 'POST') {
+                echo json_encode($paymentController->createReservationCheckoutSession());
+            } else {
+                http_response_code(405);
+                echo json_encode(['error' => 'Méthode non autorisée']);
+            }
+        }
+        // Confirmer une session Stripe Checkout (fallback sans webhook)
+        elseif (preg_match('/^\/api\/reservation\/checkout\/confirm$/', $path)) {
+            $paymentController = new PaymentController();
+            
+            if ($method === 'POST') {
+                echo json_encode($paymentController->confirmCheckoutSession());
             } else {
                 http_response_code(405);
                 echo json_encode(['error' => 'Méthode non autorisée']);

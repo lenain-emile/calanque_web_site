@@ -146,52 +146,8 @@ class Payment {
         );
     }
 
-    public function getByPaymentType($paymentType) {
-        return $this->query(
-            "SELECT * FROM payments WHERE payment_type = :payment_type ORDER BY created_at DESC", 
-            [':payment_type' => $paymentType]
-        );
-    }
-
     public function delete($id) {
         return $this->execute("DELETE FROM payments WHERE id = :id", [':id' => $id]);
     }
 
-    // --- Méthodes spécifiques Stripe ---
-    
-    public function createPaymentIntent($amount, $currency = 'eur', $metadata = []) {
-        $data = [
-            'amount' => $amount * 100, // Stripe utilise les centimes
-            'currency' => $currency,
-            'metadata' => $metadata
-        ];
-        
-        // Créer l'enregistrement en base
-        $paymentData = [
-            'amount' => $amount,
-            'status' => 'PENDING',
-            'method' => 'stripe',
-            'payment_type' => $metadata['payment_type'] ?? 'one_time',
-            'payment_date' => date('Y-m-d'),
-            'stripe_metadata' => $metadata
-        ];
-        
-        if (isset($metadata['subscription_id'])) {
-            $paymentData['subscription_id'] = $metadata['subscription_id'];
-        }
-        
-        if (isset($metadata['reservation_id'])) {
-            $paymentData['reservation_id'] = $metadata['reservation_id'];
-        }
-        
-        $this->create($paymentData);
-        $paymentId = $this->connect->lastInsertId();
-        
-        return [
-            'payment_id' => $paymentId,
-            'amount' => $amount,
-            'currency' => $currency,
-            'metadata' => $metadata
-        ];
-    }
 }

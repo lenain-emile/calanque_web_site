@@ -1,0 +1,94 @@
+/* Styles pour le composant Input réutilisable */
+
+.input-container {
+  margin-bottom: 20px;
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.input-required {
+  color: #ff6b6b;
+  margin-left: 4px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e1e8ed;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+  box-sizing: border-box;
+  background: white;
+  color: #2c3e50;
+}
+
+.input-field:focus {
+  border-color: #005BAC;
+  box-shadow: 0 0 0 3px rgba(0, 91, 172, 0.1);
+}
+
+.input-field:disabled {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.input-field::placeholder {
+  color: #adb5bd;
+}
+
+/* État d'erreur */
+.input-error {
+  border-color: #ff6b6b !important;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1) !important;
+}
+
+.input-error-message {
+  color: #ff6b6b;
+  font-size: 0.8rem;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.input-error-message::before {
+  content: "⚠️";
+  font-size: 0.7rem;
+}
+
+/* Variantes spéciales */
+.input-field.password {
+  padding-right: 45px;
+}
+
+.input-field.email {
+  text-transform: lowercase;
+}
+
+/* Focus pour l'accessibilité */
+.input-field:focus-visible {
+  outline: 2px solid #005BAC;
+  outline-offset: 2px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .input-field {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
+  
+  .input-label {
+    font-size: 0.85rem;
+  }
+}

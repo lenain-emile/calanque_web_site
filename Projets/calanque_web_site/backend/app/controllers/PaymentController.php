@@ -8,34 +8,25 @@ use App\Models\User;
 use App\Config\StripeConfig;
 use Exception;
 
-class PaymentController {
+class PaymentController extends BaseController {
     private $payment;
     private $subscription;
     private $reservation;
     private $user;
     private $stripe;
+    private $initError;
 
     public function __construct() {
         $this->payment = new Payment();
         $this->subscription = new Subscription();
         $this->reservation = new Reservation();
         $this->user = new User();
-        $this->stripe = StripeConfig::getStripeClient();
-    }
-
-    private function response($success, $message, $data = null) {
-        return compact('success', 'message', 'data');
-    }
-
-    private function requireMethod($method) {
-        if ($_SERVER['REQUEST_METHOD'] !== $method) {
-            return $this->response(false, "Méthode $method requise.");
+        try {
+            $this->stripe = StripeConfig::getStripeClient();
+        } catch (\Throwable $e) {
+            $this->stripe = null;
+            $this->initError = $e->getMessage();
         }
-        return true;
-    }
-
-    private function input() {
-        return json_decode(file_get_contents('php://input'), true) ?? [];
     }
 
     // --- PAIEMENTS D'ABONNEMENT ---
@@ -107,7 +98,7 @@ class PaymentController {
                 'payment_intent_id' => $paymentIntent->id
             ]);
 
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             return $this->response(false, 'Erreur: ' . $e->getMessage());
         }
     }
@@ -128,6 +119,9 @@ class PaymentController {
         }
 
         try {
+            if (!$this->stripe) {
+                return $this->response(false, 'Stripe non initialisé: ' . ($this->initError ?: 'clé manquante'));
+            }
             // Vérifier que la réservation existe
             $reservation = $this->reservation->getById($reservationId);
             if (!$reservation) {
@@ -179,7 +173,7 @@ class PaymentController {
                 'payment_intent_id' => $paymentIntent->id
             ]);
 
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             return $this->response(false, 'Erreur: ' . $e->getMessage());
         }
     }
@@ -223,6 +217,152 @@ class PaymentController {
             return $this->response(false, 'Paiement non confirmé.');
 
         } catch (Exception $e) {
+            return $this->response(false, 'Erreur: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Crée une session Stripe Checkout pour une réservation
+     */
+    public function createReservationCheckoutSession() {
+        if (($check = $this->requireMethod('POST')) !== true) return $check;
+
+        $data = $this->input();
+        $userId = $data['user_id'] ?? null;
+        $reservationId = $data['reservation_id'] ?? null;
+        $amount = $data['amount'] ?? null; // en euros
+
+        if (!$userId || !$reservationId || !$amount) {
+            return $this->response(false, 'Tous les champs sont obligatoires.');
+        }
+
+        try {
+            if (!$this->stripe) {
+                return $this->response(false, 'Stripe non initialisé: ' . ($this->initError ?: 'clé manquante'));
+            }
+            // Vérification réservation et utilisateur
+            $reservation = $this->reservation->getById($reservationId);
+            if (!$reservation) return $this->response(false, 'Réservation introuvable.');
+            $user = $this->user->getById($userId);
+            if (!$user) return $this->response(false, 'Utilisateur introuvable.');
+
+            // Client Stripe
+            $stripeCustomer = $this->getOrCreateStripeCustomer($user);
+
+            // Création session Checkout
+            $successUrl = \App\Config\StripeConfig::SUCCESS_URL . '?status=success&reservation_id=' . $reservationId . '&session_id={CHECKOUT_SESSION_ID}';
+            $cancelUrl = \App\Config\StripeConfig::CANCEL_URL . '?status=cancel';
+            $session = $this->stripe->checkout->sessions->create([
+                'mode' => 'payment',
+                'customer' => $stripeCustomer->id,
+                'payment_method_types' => ['card'],
+                'line_items' => [[
+                    'price_data' => [
+                        'currency' => StripeConfig::CURRENCY,
+                        'product_data' => [
+                            'name' => 'Réservation camping #' . $reservationId
+                        ],
+                        'unit_amount' => (int) round($amount * 100)
+                    ],
+                    'quantity' => 1
+                ]],
+                'metadata' => [
+                    'reservation_id' => $reservationId,
+                    'user_id' => $userId,
+                    'payment_type' => 'reservation'
+                ],
+                'success_url' => $successUrl,
+                'cancel_url' => $cancelUrl
+            ]);
+
+            // Enregistrer le paiement en base (PENDING)
+            $paymentData = [
+                'stripe_payment_intent_id' => $session->payment_intent ?? null,
+                'stripe_customer_id' => $stripeCustomer->id,
+                'reservation_id' => $reservationId,
+                'amount' => $amount,
+                'status' => 'PENDING',
+                'method' => 'stripe',
+                'payment_type' => 'reservation',
+                'payment_date' => date('Y-m-d'),
+                'stripe_metadata' => [
+                    'checkout_session_id' => $session->id,
+                    'reservation_id' => $reservationId,
+                    'user_id' => $userId
+                ]
+            ];
+            $this->payment->create($paymentData);
+
+            return $this->response(true, 'Session Checkout créée.', [
+                'checkout_url' => $session->url,
+                'session_id' => $session->id
+            ]);
+
+        } catch (Exception $e) {
+            return $this->response(false, 'Erreur: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Confirme une session Stripe Checkout (sans webhook)
+     */
+    public function confirmCheckoutSession() {
+        if (($check = $this->requireMethod('POST')) !== true) return $check;
+
+        $data = $this->input();
+        $sessionId = $data['session_id'] ?? null;
+
+        if (!$sessionId) {
+            return $this->response(false, 'session_id requis');
+        }
+
+        try {
+            if (!$this->stripe) {
+                return $this->response(false, 'Stripe non initialisé: ' . ($this->initError ?: 'clé manquante'));
+            }
+
+            $session = $this->stripe->checkout->sessions->retrieve($sessionId);
+            if (!$session || $session->status !== 'complete') {
+                return $this->response(false, 'Session non complétée');
+            }
+
+            $paymentIntentId = $session->payment_intent;
+            $reservationId = $session->metadata->reservation_id ?? null;
+            $userId = $session->metadata->user_id ?? null;
+
+            // Récupérer le paiement en base via la réservation
+            $payments = $this->payment->getByReservationId($reservationId);
+            if (!$payments || count($payments) === 0) {
+                return $this->response(false, 'Paiement introuvable pour la réservation');
+            }
+            $payment = $payments[0];
+
+            // Mettre à jour les infos Stripe
+            $this->payment->updateStripeData($payment['id'], [
+                'stripe_payment_intent_id' => $paymentIntentId,
+                'stripe_customer_id' => $session->customer,
+                'stripe_metadata' => [
+                    'checkout_session_id' => $sessionId,
+                    'confirmed_at' => date('Y-m-d H:i:s')
+                ]
+            ]);
+
+            // Valider le PaymentIntent et MAJ statuts
+            $pi = $this->stripe->paymentIntents->retrieve($paymentIntentId);
+            if ($pi && $pi->status === 'succeeded') {
+                $this->payment->updateStatus($payment['id'], 'SUCCESS', [
+                    'stripe_status' => $pi->status
+                ]);
+                $this->updateRelatedEntityStatus($payment, 'paid');
+                return $this->response(true, 'Paiement confirmé avec succès.', [
+                    'payment_id' => $payment['id'],
+                    'status' => 'SUCCESS'
+                ]);
+            }
+
+            return $this->response(false, 'Paiement non confirmé');
+
+        } catch (\Throwable $e) {
             return $this->response(false, 'Erreur: ' . $e->getMessage());
         }
     }

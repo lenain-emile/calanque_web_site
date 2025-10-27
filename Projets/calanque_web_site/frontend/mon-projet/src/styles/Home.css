@@ -1,0 +1,882 @@
+/* Bootstrap est maintenant importé directement dans Home.jsx */
+
+/* Variables CSS */
+:root {
+  --primary-color: #005BAC;
+  --secondary-color: #00AEEF;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --info-color: #17a2b8;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+}
+
+/* Container principal */
+.home-container {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  padding-top: 140px; /* Espace supplémentaire pour éviter le chevauchement */
+}
+
+/* Overlay sombre */
+.home-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+
+/* Loading */
+.home-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  z-index: 10;
+}
+
+.home-loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Navigation */
+.home-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.home-navbar-logo {
+  height: 40px;
+  width: auto;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.navbar-brand {
+  font-weight: 600;
+  color: white !important;
+}
+
+/* Hero Section */
+.home-hero-card {
+  position: relative;
+  z-index: 5;
+  margin-top: 100px;
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.home-hero-content {
+  padding: 20px;
+}
+
+.home-hero-logo {
+  height: 80px;
+  width: auto;
+  border-radius: 50%;
+  border: 3px solid var(--primary-color);
+  box-shadow: 0 8px 25px rgba(0, 91, 172, 0.3);
+}
+
+/* Welcome Section */
+.home-welcome-section {
+  background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(0, 91, 172, 0.1));
+  padding: 30px;
+  border-radius: 15px;
+  border: 1px solid rgba(40, 167, 69, 0.2);
+}
+
+/* CTA Section */
+.home-cta-section {
+  padding: 20px 0;
+}
+
+/* Features Section */
+.home-feature-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(0, 91, 172, 0.1);
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px);
+}
+
+.home-feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 91, 172, 0.2);
+}
+
+.home-feature-icon {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+/* Footer */
+.home-footer {
+  position: relative;
+  z-index: 5;
+  background: #020202;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 30px 0;
+}
+
+.home-footer-logo {
+  height: 50px;
+  width: auto;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .mt-8 {
+    margin-top: 4rem !important; /* Espacement réduit sur tablette */
+  }
+  .home-container {
+    padding-top: 120px; /* Espace supplémentaire pour éviter le chevauchement sur tablette */
+  }
+  
+  .home-hero-card {
+    margin-top: 50px;
+  }
+  
+  .home-hero-logo {
+    height: 60px;
+  }
+  
+  .display-4 {
+    font-size: 2rem;
+  }
+  
+  .home-feature-icon {
+    font-size: 2.5rem;
+  }
+  
+  .home-navbar-logo {
+    height: 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .mt-8 {
+    margin-top: 3rem !important; /* Espacement réduit sur mobile */
+  }
+  
+  .home-container {
+    padding-top: 100px; /* Espace supplémentaire pour éviter le chevauchement sur mobile */
+  }
+  
+  .home-hero-content {
+    padding: 15px;
+  }
+  
+  .home-welcome-section {
+    padding: 20px;
+  }
+  
+  .home-feature-card {
+    margin-bottom: 20px;
+  }
+}
+
+/* Animations */
+.home-hero-card {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.home-feature-card {
+  animation: fadeInUp 0.8s ease-out;
+  animation-fill-mode: both;
+}
+
+.home-feature-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.home-feature-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.home-feature-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom Bootstrap overrides */
+.btn-primary {
+  background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 91, 172, 0.3);
+}
+
+.btn-outline-light {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: white;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+/* Dropdown customization */
+.dropdown-menu {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 91, 172, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(0, 91, 172, 0.1);
+  color: var(--primary-color);
+}
+
+/* Carrousel Styles */
+.home-carousel-container {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  height: 650px;
+  overflow: hidden;
+  margin-top: 0; /* Coller le carrousel à la navbar */
+}
+
+.carousel-slide {
+  height: 600px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.carousel-content-left {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  z-index: 2;
+  max-width: 500px;
+}
+
+.carousel-title {
+  font-size: 4rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 20px;
+  line-height: 1.2;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.carousel-description {
+  font-size: 1.8rem;
+  color: white;
+  line-height: 1.5;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Section Réservation */
+.reservation-image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  margin-right: 80px; /* Écart encore plus grand entre la photo et le texte */
+}
+
+.reservation-image {
+  width: 600px;
+  height: 500px;
+  
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.reservation-image:hover {
+  transform: scale(1.05);
+}
+
+.reservation-content {
+  padding: 40px 20px;
+  background: transparent; /* Pas de fond */
+  border-radius: 15px;
+  margin-left: 80px; /* Écart encore plus grand entre la photo et le texte */
+  position: relative;
+  z-index: 5;
+}
+
+.reservation-title {
+  font-size: 4rem; /* Même taille que le carrousel */
+  font-weight: bold;
+  color: rgb(255, 255, 255); 
+  margin-bottom: 20px;
+  text-align: left; 
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8); 
+}
+
+.reservation-description {
+  font-size: 1.8rem; /* Même taille que le carrousel */
+  color: white; 
+  line-height: 1.5;
+  margin-bottom: 30px;
+  text-align: left; 
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8); 
+}
+
+.reservation-options {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.reservation-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  background: rgba(0, 91, 172, 0.1);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  min-width: 100px;
+}
+
+.reservation-option:hover {
+  background: rgba(0, 91, 172, 0.2);
+  transform: translateY(-5px);
+}
+
+.reservation-icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.reservation-option span:last-child {
+  font-weight: 600;
+  color: var(--primary-color);
+  font-size: 0.9rem;
+}
+
+.reservation-button {
+  width: 100%;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 91, 172, 0.3);
+  background: var(--primary-color);
+  border: 2px solid white;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  z-index: 10;
+}
+
+.reservation-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 91, 172, 0.4);
+  background: white;
+  color: var(--primary-color);
+}
+
+/* Custom spacing utility */
+.mt-8 {
+  margin-top: 200px;
+}
+
+/* Section Plongée */
+.plongee-image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  margin-left: 200px; /* Écart à gauche pour l'image */
+  width: 100%;
+  max-width: 600px;
+  z-index: 1;
+}
+
+.plongee-image {
+  width: 100%;
+  max-width: 600px;
+  height: 500px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.plongee-image:hover {
+  transform: scale(1.05);
+}
+
+.plongee-content {
+  padding: 40px 20px;
+  background: transparent; /* Pas de fond */
+  border-radius: 15px;
+  position: relative;
+  z-index: 1;
+}
+
+.plongee-title {
+  font-size: 4rem; /* Même taille que le carrousel */
+  font-weight: bold;
+  color: rgb(255, 255, 255); 
+  margin-bottom: 20px;
+  text-align: left; 
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8); 
+}
+
+.plongee-description {
+  font-size: 1.8rem; /* Même taille que le carrousel */
+  color: white; 
+  line-height: 1.5;
+  margin-bottom: 30px;
+  text-align: left; 
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8); 
+}
+
+.plongee-button {
+  width: 100%;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 91, 172, 0.3);
+  background: var(--primary-color);
+  border: 2px solid white;
+  color: white;
+}
+
+.plongee-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 91, 172, 0.4);
+  background: white;
+  color: var(--primary-color);
+}
+
+/* Carrousel Controls */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 91, 172, 0.8);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.carousel-control-prev {
+  left: 20px;
+}
+
+.carousel-control-next {
+  right: 20px;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  opacity: 1;
+  background: rgba(0, 91, 172, 1);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Carrousel Indicators */
+.carousel-indicators {
+  bottom: 20px;
+}
+
+.carousel-indicators button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  margin: 0 5px;
+  transition: all 0.3s ease;
+}
+
+.carousel-indicators button.active {
+  background: var(--primary-color);
+  transform: scale(1.2);
+}
+
+.carousel-indicators button:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* Responsive Carrousel */
+@media (max-width: 768px) {
+  .home-carousel-container {
+    height: 500px;
+  }
+  
+  .carousel-slide {
+    height: 500px;
+  }
+  
+  .carousel-content-left {
+    top: 30px;
+    left: 30px;
+    max-width: 350px;
+  }
+  
+  .carousel-title {
+    font-size: 2.8rem;
+  }
+  
+  .carousel-description {
+    font-size: 1.4rem;
+  }
+  
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 40px;
+    height: 40px;
+  }
+  
+  /* Section Réservation - Tablette */
+  .reservation-image-container {
+    margin-right: 40px;
+  }
+  
+  .reservation-image {
+    height: 350px;
+  }
+  
+  .reservation-content {
+    padding: 30px 15px;
+    margin-left: 40px;
+  }
+  
+  .reservation-title {
+    font-size: 2.8rem; /* Cohérent avec le carrousel tablette */
+  }
+  
+  .reservation-description {
+    font-size: 1.4rem; /* Cohérent avec le carrousel tablette */
+  }
+  
+  /* Section Plongée - Tablette */
+  .plongee-image-container {
+    margin-left: 40px;
+    max-width: 500px;
+  }
+  
+  .plongee-image {
+    height: 350px;
+    max-width: 500px;
+  }
+  
+  .plongee-content {
+    padding: 30px 15px;
+    margin-right: 40px;
+  }
+  
+  .plongee-title {
+    font-size: 2.8rem; /* Cohérent avec le carrousel tablette */
+  }
+  
+  .plongee-description {
+    font-size: 1.4rem; /* Cohérent avec le carrousel tablette */
+  }
+  
+  .carousel-control-prev {
+    left: 10px;
+  }
+  
+  .carousel-control-next {
+    right: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .home-carousel-container {
+    height: 400px;
+  }
+  
+  .carousel-slide {
+    height: 400px;
+  }
+  
+  .carousel-content-left {
+    top: 20px;
+    left: 20px;
+    max-width: 280px;
+  }
+  
+  .carousel-title {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+  }
+  
+  .carousel-description {
+    font-size: 1.2rem;
+  }
+  
+  /* Section Réservation - Mobile */
+  .reservation-image-container {
+    margin-right: 0;
+    margin-bottom: 30px;
+  }
+  
+  .reservation-image {
+    height: 300px;
+  }
+  
+  .reservation-content {
+    padding: 25px 15px;
+    margin-left: 0;
+    margin-top: 0;
+  }
+  
+  .reservation-title {
+    font-size: 2.2rem; /* Cohérent avec le carrousel mobile */
+    text-align: center; /* Centré sur mobile */
+  }
+  
+  .reservation-description {
+    font-size: 1.2rem; /* Cohérent avec le carrousel mobile */
+    text-align: center; /* Centré sur mobile */
+  }
+  
+  .reservation-button {
+    font-size: 1.1rem;
+    padding: 12px 25px;
+  }
+  
+  /* Section Plongée - Mobile */
+  .plongee-image-container {
+    margin-left: 0;
+    margin-bottom: 30px;
+    max-width: 100%;
+  }
+  
+  .plongee-image {
+    height: 300px;
+    max-width: 100%;
+  }
+  
+  .plongee-content {
+    padding: 25px 15px;
+    margin-right: 0;
+    margin-top: 0;
+  }
+  
+  .plongee-title {
+    font-size: 2.2rem; /* Cohérent avec le carrousel mobile */
+    text-align: center; /* Centré sur mobile */
+  }
+  
+  .plongee-description {
+    font-size: 1.2rem; /* Cohérent avec le carrousel mobile */
+    text-align: center; /* Centré sur mobile */
+  }
+  
+  .plongee-button {
+    font-size: 1.1rem;
+    padding: 12px 25px;
+  }
+  
+  /* Section Sentiers - Mobile */
+  .sentiers-image-container {
+    margin-right: 0;
+    margin-bottom: 30px;
+    max-width: 100%;
+  }
+  
+  .sentiers-image {
+    height: 300px;
+    max-width: 100%;
+  }
+  
+  .sentiers-content {
+    padding: 25px 15px;
+    margin-left: 0;
+    margin-top: 0;
+  }
+  
+  .sentiers-title {
+    font-size: 2.2rem; /* Cohérent avec le carrousel mobile */
+    text-align: center; /* Centré sur mobile */
+  }
+  
+  .sentiers-description {
+    font-size: 1.2rem; /* Cohérent avec le carrousel mobile */
+    text-align: center; /* Centré sur mobile */
+  }
+  
+  .sentiers-button {
+    font-size: 1.1rem;
+    padding: 12px 25px;
+  }
+}
+
+/* Section Sentiers */
+.sentiers-image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  margin-right: 200px; /* Écart à droite pour l'image */
+  width: 100%;
+  max-width: 600px;
+}
+
+.sentiers-image {
+  width: 100%;
+  max-width: 600px;
+  height: 500px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.sentiers-image:hover {
+  transform: scale(1.05);
+}
+
+.sentiers-content {
+  padding: 40px 20px;
+  background: transparent; /* Pas de fond */
+  border-radius: 15px;
+}
+
+.sentiers-title {
+  font-size: 4rem; /* Même taille que le carrousel */
+  font-weight: bold;
+  color: rgb(255, 255, 255); 
+  margin-bottom: 20px;
+  text-align: left; 
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8); 
+}
+
+.sentiers-description {
+  font-size: 1.8rem; /* Même taille que le carrousel */
+  color: white; 
+  line-height: 1.5;
+  margin-bottom: 30px;
+  text-align: left; 
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8); 
+}
+
+.sentiers-button {
+  width: 100%;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 91, 172, 0.3);
+  background: var(--primary-color);
+  border: 2px solid white;
+  color: white;
+}
+
+.sentiers-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 91, 172, 0.4);
+  background: white;
+  color: var(--primary-color);
+}
+
+/* Responsive Section Sentiers - Tablette */
+@media (max-width: 768px) {
+  .sentiers-image-container {
+    margin-right: 40px;
+    max-width: 500px;
+  }
+  
+  .sentiers-image {
+    height: 350px;
+    max-width: 500px;
+  }
+  
+  .sentiers-content {
+    padding: 30px 15px;
+    margin-left: 40px;
+  }
+  
+  .sentiers-title {
+    font-size: 2.8rem; /* Cohérent avec le carrousel tablette */
+  }
+  
+  .sentiers-description {
+    font-size: 1.4rem; /* Cohérent avec le carrousel tablette */
+  }
+}
